@@ -176,18 +176,18 @@ perl -alne 'print scalar @F, " $_"'
 # 计算所有行字段数的总和
 perl -alne '$t += @F; END { print $t}'
 
-# Print the total number of fields that match a pattern
+# 打印匹配某个正则的总和
 perl -alne 'map { /regex/ && $t++ } @F; END { print $t }'
 perl -alne '$t += /regex/ for @F; END { print $t }'
 perl -alne '$t += grep /regex/, @F; END { print $t }'
 
-# Print the total number of lines that match a pattern
+# 打印匹配某个正则的总行数
 perl -lne '/regex/ && $t++; END { print $t }'
 
-# Print the number PI to n decimal places
+# 打印圆周率，保留 n 为有效数字
 perl -Mbignum=bpi -le 'print bpi(n)'
 
-# Print the number PI to 39 decimal places
+# 打印圆周率，保留 39 位有效数字
 perl -Mbignum=PI -le 'print PI'
 
 # Print the number E to n decimal places
