@@ -32,7 +32,7 @@ Github 上的 Perl 单行程序:
 
 目录:
 
-    1. 文件 spacing
+    1. 文件 Spacing
     2. 行号
     3. 计算
     4. 生成字符串和数组
@@ -425,10 +425,10 @@ perl -ne '/regex/ && $last && print $last; $last = $_'
 # 打印匹配某个正则的后一行
 perl -ne 'if ($p) { print; $p = 0 } $p++ if /regex/'
 
-# 打印同时包含 AAA 和 BBB 的那些行
+# 打印同时包含 AAA 和 BBB 的行
 perl -ne '/AAA/ && /BBB/ && print'
 
-# 打印同时不包含 AAA 和 BBB 的那些行
+# 打印同时不包含 AAA 和 BBB 的行
 perl -ne '!/AAA/ && !/BBB/ && print'
 
 # 打印顺序包含 AAA, BBB, CCC 的行
@@ -474,7 +474,7 @@ perl -ne 'print if /^\d+$/'
 # 显示只包含字母的行
 perl -ne 'print if /^[[:alpha:]]+$/
 
-# 每两行打印一次
+# 从文件首行开始,每两行打印一次
 perl -ne 'print if $. % 2'
 
 # 从第二行开始,每两行打印一次
@@ -490,7 +490,7 @@ perl -ne 'print unless $a{$_}++'
 perl -alne 'print $F[0]'
 
 
-实用的正则表达式
+实用的正则
 -------------------------
 
 # 匹配像 IP 地址的
