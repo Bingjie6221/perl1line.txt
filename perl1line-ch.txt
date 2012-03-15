@@ -196,43 +196,43 @@ perl -Mbignum=bexp -le 'print bexp(1,n+1)'
 # Print the number E to 39 decimal places
 perl -Mbignum=e -le 'print e'
 
-# Print UNIX time (seconds since Jan 1, 1970, 00:00:00 UTC)
+# 打印系统 UNIX 时间 (从 UTC 1970.1.1 00:00:00 到现在的秒数)
 perl -le 'print time'
 
-# Print GMT (Greenwich Mean Time) and local computer time
+# 打印 GMT 时间(格林威治时间) 和本机的系统时间
 perl -le 'print scalar gmtime'
 perl -le 'print scalar localtime'
 
-# Print local computer time in H:M:S format
+# 以 小时:分钟:秒 格式打印本机系统时间
 perl -le 'print join ":", (localtime)[2,1,0]'
 
-# Print yesterday's date
+# 打印昨天的时间
 perl -MPOSIX -le '@now = localtime; $now[3] -= 1; print scalar localtime mktime @now'
 
-# Print date 14 months, 9 days and 7 seconds ago
+# 打印 14 个月 9 天 7 秒前的时间
 perl -MPOSIX -le '@now = localtime; $now[0] -= 7; $now[4] -= 14; $now[7] -= 9; print scalar localtime mktime @now'
 
-# Prepend timestamps to stdout (GMT, localtime)
+# 在每行的输出前加上时间戳( 格林威治时间，本地时间)
 tail -f logfile | perl -ne 'print scalar gmtime," ",$_'
 tail -f logfile | perl -ne 'print scalar localtime," ",$_'
 
-# Calculate factorial of 5
+# 计算 5 阶乘
 perl -MMath::BigInt -le 'print Math::BigInt->new(5)->bfac()'
 perl -le '$f = 1; $f *= $_ for 1..5; print $f'
 
-# Calculate greatest common divisor (GCM)
+# 计算最大公约数
 perl -MMath::BigInt=bgcd -le 'print bgcd(@list_of_numbers)'
 
-# Calculate GCM of numbers 20 and 35 using Euclid's algorithm
+# 使用 Euclid 算法计算 20 和 35 的最大公约数
 perl -le '$n = 20; $m = 35; ($m,$n) = ($n,$m%$n) while $n; print $m'
 
-# Calculate least common multiple (LCM) of numbers 35, 20 and 8
+# 计算 35，20，8 的最小公倍数
 perl -MMath::BigInt=blcm -le 'print blcm(35,20,8)'
 
-# Calculate LCM of 20 and 35 using Euclid's formula: n*m/gcd(n,m)
+# 使用 Euclid 公式( n*m/gcd(n,m) )计算 20 和 35 的最小公倍数
 perl -le '$a = $n = 20; $b = $m = 35; ($m,$n) = ($n,$m%$n) while $n; print $a*$b/$m'
 
-# Generate 10 random numbers between 5 and 15 (excluding 15)
+# 在 5-15 间生成 10 个随机数，不包含 15
 perl -le '$n=10; $min=5; $max=15; $, = " "; print map { int(rand($max-$min))+$min } 1..$n'
 
 # Find and print all permutations of a list
@@ -241,28 +241,28 @@ perl -MAlgorithm::Permute -le '$l = [1,2,3,4,5]; $p = Algorithm::Permute->new($l
 # Generate the power set
 perl -MList::PowerSet=powerset -le '@l = (1,2,3,4,5); for (@{powerset(@l)}) { print "@$_" }'
 
-# Convert an IP address to unsigned integer
+# 将 IP 地址转换为无符号的数字
 perl -le '$i=3; $u += ($_<<8*$i--) for "127.0.0.1" =~ /(\d+)/g; print $u'
 perl -le '$ip="127.0.0.1"; $ip =~ s/(\d+)\.?/sprintf("%02x", $1)/ge; print hex($ip)'
 perl -le 'print unpack("N", 127.0.0.1)'
 perl -MSocket -le 'print unpack("N", inet_aton("127.0.0.1"))'
 
-# Convert an unsigned integer to an IP address
+# 将一个无符号的数字转换成 IP 地址
 perl -MSocket -le 'print inet_ntoa(pack("N", 2130706433))'
 perl -le '$ip = 2130706433; print join ".", map { (($ip>>8*($_))&0xFF) } reverse 0..3'
 perl -le '$ip = 2130706433; $, = "."; print map { (($ip>>8*($_))&0xFF) } reverse 0..3'
 
 
-STRING CREATION AND ARRAY CREATION
+生成字符串和数组
 ----------------------------------
 
-# Generate and print the alphabet
+# 生成并打印字母
 perl -le 'print a..z'
 perl -le 'print ("a".."z")'
 perl -le '$, = ","; print ("a".."z")'
 perl -le 'print join ",", ("a".."z")'
 
-# Generate and print all the strings from "a" to "zz"
+# 生成所有 "a" 到 "zz" 的字符，并打印它们
 perl -le 'print ("a".."zz")'
 perl -le 'print "aa".."zz"'
 
@@ -274,46 +274,46 @@ perl -le '$num = 255; @hex = (0..9, "a".."f"); while ($num) { $s = $hex[($num%16
 perl -le '$hex = sprintf("%x", 255); print $hex'
 perl -le '$num = "ff"; print hex $num'
 
-# Generate a random 8 character password
+# 随机生成 8 个字符组成的密码
 perl -le 'print map { ("a".."z")[rand 26] } 1..8'
 perl -le 'print map { ("a".."z", 0..9)[rand 36] } 1..8'
 
-# Create a string of specific length
+# 生成定长的字符串
 perl -le 'print "a"x50'
 
 # Create a repeated list of elements
 perl -le '@list = (1,2)x20; print "@list"'
 
-# Create an array from a string
+# 利用字符串生成数组
 @months = split ' ', "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec"
 @months = qw/Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec/
 
-# Create a string from an array
+# 使用数组生成字符串
 @stuff = ("hello", 0..9, "world"); $string = join '-', @stuff
 
-# Find the numeric values for characters in the string
+# 将字符串中的字符转换成其 ASCII 码对应的数字
 perl -le 'print join ", ", map { ord } split //, "hello world"'
 
-# Convert a list of numeric ASCII values into a string
+# 将一列 ASCII 数字转换成一个字符串
 perl -le '@ascii = (99, 111, 100, 105, 110, 103); print pack("C*", @ascii)'
 perl -le '@ascii = (99, 111, 100, 105, 110, 103); print map { chr } @ascii'
 
-# Generate an array with odd numbers from 1 to 100
+# 使用 1 到 100 间的奇数生成一个数组
 perl -le '@odd = grep {$_ % 2 == 1} 1..100; print "@odd"'
 perl -le '@odd = grep { $_ & 1 } 1..100; print "@odd"'
 
-# Generate an array with even numbers from 1 to 100
+# 使用 1 到 100 间的偶数生成一个数组
 perl -le '@even = grep {$_ % 2 == 0} 1..100; print "@even"'
 
-# Find the length of the string
+# 求字符串的长度
 perl -le 'print length "one-liners are great"'
 
-# Find the number of elements in an array
+# 显示数组中元素的个数
 perl -le '@array = ("a".."z"); print scalar @array'
 perl -le '@array = ("a".."z"); print $#array + 1'
 
 
-TEXT CONVERSION AND SUBSTITUTION
+文本操作和转换
 --------------------------------
 
 # ROT13 a string
@@ -322,11 +322,11 @@ TEXT CONVERSION AND SUBSTITUTION
 # ROT 13 a file
 perl -lpe 'y/A-Za-z/N-ZA-Mn-za-m/' file
 
-# Base64 encode a string
+# 使用 Base64 编码字符串
 perl -MMIME::Base64 -e 'print encode_base64("string")'
 perl -MMIME::Base64 -0777 -ne 'print encode_base64($_)' file
 
-# Base64 decode a string
+# 使用 Base64 解码字符串
 perl -MMIME::Base64 -le 'print decode_base64("base64string")'
 perl -MMIME::Base64 -ne 'print decode_base64($_)' file
 
@@ -342,38 +342,38 @@ perl -MHTML::Entities -le 'print encode_entities($string)'
 # HTML-decode a string
 perl -MHTML::Entities -le 'print decode_entities($string)'
 
-# Convert all text to uppercase
+# 转换所有文本到大写格式
 perl -nle 'print uc'
 perl -ple '$_=uc'
 perl -nle 'print "\U$_"'
 
-# Convert all text to lowercase
+# 转换所有文本到小写格式
 perl -nle 'print lc'
 perl -ple '$_=lc'
 perl -nle 'print "\L$_"'
 
-# Uppercase only the first word of each line
+# 对每一行的首字母大写
 perl -nle 'print ucfirst lc'
 perl -nle 'print "\u\L$_"'
 
 # Invert the letter case
 perl -ple 'y/A-Za-z/a-zA-Z/'
 
-# Camel case each line
+# 使用骆驼规则处理每行
 perl -ple 's/(\w+)/\u$1/g'
 perl -ple 's/(?<!['])(\w+)/\u\1/g'
 
-# Strip leading whitespace (spaces, tabs) from the beginning of each line
+# 丢掉行首的空白字符(空白符，制表符)
 perl -ple 's/^[ \t]+//'
 perl -ple 's/^\s+//'
 
-# Strip trailing whitespace (space, tabs) from the end of each line
+# 丢掉行尾的空白字符(空白符，制表符)
 perl -ple 's/[ \t]+$//'
 
-# Strip whitespace from the beginning and end of each line
+# 丢掉行首和行尾的空白符
 perl -ple 's/^[ \t]+|[ \t]+$//g'
 
-# Convert UNIX newlines to DOS/Windows newlines
+# 将 UNIX 新行转换成 DOS/Windows 格式
 perl -pe 's|\n|\r\n|'
 
 # Convert DOS/Windows newlines to UNIX newlines
