@@ -1,5 +1,5 @@
-用 Perl 实现的有用的单行程序                            1   28 2012 | 版本 1.08
---------------------------------                    -----------   ------------
+用 Perl 实现的有用的单行程序                     1   28 2012 | 版本 1.08
+------------------------                    -----------   ------------
 
 由 Peteris Krumins 编译 (peter@catonmat.net, @pkrumins on Twitter)
 http://www.catonmat.net -- good coders code, great reuse
@@ -10,15 +10,15 @@ http://www.catonmat.net -- good coders code, great reuse
 
 此文件也有其它语言的:	
 This file is also available in other languages:
-	 (暂时还没有)
+	 中文： https://github.com/vinian/perl1line.txt
 	 (如果您想翻译的话, 请与我 peter@catonmat.net 联系)
 
 Github 上的 Perl 单行程序:	 
  
     https://github.com/pkrumins/perl1line.txt
 
-	你可以给我发送推送请求! 我接受问题修复,
-	新的单行代码,翻译和其它相关的所有东西.
+	你可以在 Github 上给我发送推送请求! 我接受问题修复,
+	新的单行代码,翻译和其它所有相关东西.
 
 在这个文件的基础上,我还写了一本 "Perl 单行程序" 的电子书,
 它对这个文件里的所有单行做了解释.从下面这个链接里获取它:
@@ -51,7 +51,7 @@ perl -pe 'BEGIN { $\="\n" }'
 perl -pe '$_ .= "\n"'
 perl -pe 's/$/\n/'
 
-# 对一个文件每行除了空行,都用两个换行符
+# 除空行以外,对文件的每行使用两个换行符
 perl -pe '$_ .= "\n" unless /^$/'
 perl -pe '$_ .= "\n" if /\S/'
 
@@ -62,7 +62,7 @@ perl -pe '$_.="\n\n"'
 # 给一个文件加入多个换行符
 perl -pe '$_.="\n"x7'
 
-# 给每一行都前加入一个换行符
+# 给每一行都前加入一个空行
 perl -pe 's//\n/'
 
 # 去掉所有空行
@@ -74,7 +74,7 @@ perl -ne 'print if /\S/'
 perl -00 -pe ''
 perl -00pe0
 
-# 压缩/展开所有的空行为多个连续的空行
+# 将所有的空行压缩/展开为多个连续的空行
 perl -00 -pe '$_.="\n"x4'
 
 # 对一个文件的每 10 行,都使用 Tab 键分隔开
@@ -87,22 +87,22 @@ perl -lpe '$\ = $. % 10 ? "\t" : "\n"'
 # 给文件的每行都加上行号
 perl -pe '$_ = "$. $_"'
 
-# 给文件的的非空行加上行号
+# 给文件的非空行加上行号
 perl -pe '$_ = ++$a." $_" if /./'
 
 # 给非空白行加上行号并打印(丢掉空行)
 perl -ne 'print ++$a." $_" if /./'
 
-# 给所有行都加上行号,但是只有非空行打印行号
+# 给所有行都加上行号,但只打印非空行的行号
 perl -pe '$_ = "$. $_" if /./'
 
-# 给只出现某个正则的行加上行号,打印其它未修改的
+# 只给与某个正则匹配的行加上行号,打印其它未修改的
 perl -pe '$_ = ++$a." $_" if /regex/'
 
 # 打印只包含某个正则的行,并在它们行首顺序添加行号
 perl -ne 'print ++$a." $_" if /regex/'
 
-# 打印所有行,但只对包含某个正则的行,在行首打印行号
+# 给与正则匹配的行加上行号并打印
 perl -pe '$_ = "$. $_" if /regex/'
 
 # 给所有行使用指定的格式添加行号(模拟 cat -n)
@@ -128,7 +128,7 @@ perl -le 'print scalar(grep{/^$/}<>)'
 perl -le 'print ~~grep{/^$/}<>'
 perl -E 'say~~grep{/^$/}<>'
 
-# 打印一个文件里匹配某个模式的行的总数(模拟 grep -c)
+# 打印一个文件里匹配某个正则的行的总数(模拟 grep -c)
 Print the number of lines in a file that match a pattern (emulate grep -c)
 perl -lne '$a++ if /regex/; END {print $a+0}'
 perl -nE '$a++ if /regex/; END {say $a+0}'
@@ -151,10 +151,10 @@ perl -MList::Util=sum -alne '$s += sum @F; END { print $s }'
 perl -MList::Util=shuffle -alne 'print "@{[shuffle @F]}"'
 perl -MList::Util=shuffle -alne 'print join " ", shuffle @F'
 
-# 打印一行中的最小的字段
+# 打印一行中的最小的元素
 perl -MList::Util=min -alne 'print min @F'
 
-# 打印所有行最小的字段
+# 打印所有行最小的元素
 perl -MList::Util=min -alne '@M = (@M, @F); END { print min @M }'
 perl -MList::Util=min -alne '$min = min @F; $rmin = $min unless defined $rmin && $min > $rmin; END { print $rmin }'
 
@@ -184,16 +184,16 @@ perl -alne '$t += grep /regex/, @F; END { print $t }'
 # 打印匹配某个正则的总行数
 perl -lne '/regex/ && $t++; END { print $t }'
 
-# 打印圆周率，保留 n 为有效数字
+# 打印圆周率，保留 n 位有效数字
 perl -Mbignum=bpi -le 'print bpi(n)'
 
 # 打印圆周率，保留 39 位有效数字
 perl -Mbignum=PI -le 'print PI'
 
-# Print the number E to n decimal places
+# 打印指数,保留 n 位有效数字
 perl -Mbignum=bexp -le 'print bexp(1,n+1)'
 
-# Print the number E to 39 decimal places
+# 打印指数,保留 39 位有效数字
 perl -Mbignum=e -le 'print e'
 
 # 打印系统 UNIX 时间 (从 UTC 1970.1.1 00:00:00 到现在的秒数)
@@ -203,7 +203,7 @@ perl -le 'print time'
 perl -le 'print scalar gmtime'
 perl -le 'print scalar localtime'
 
-# 以 小时:分钟:秒 格式打印本机系统时间
+# 以 小时:分钟:秒 的格式打印本机系统时间
 perl -le 'print join ":", (localtime)[2,1,0]'
 
 # 打印昨天的时间
@@ -216,7 +216,7 @@ perl -MPOSIX -le '@now = localtime; $now[0] -= 7; $now[4] -= 14; $now[7] -= 9; p
 tail -f logfile | perl -ne 'print scalar gmtime," ",$_'
 tail -f logfile | perl -ne 'print scalar localtime," ",$_'
 
-# 计算 5 阶乘
+# 计算 5 的阶乘
 perl -MMath::BigInt -le 'print Math::BigInt->new(5)->bfac()'
 perl -le '$f = 1; $f *= $_ for 1..5; print $f'
 
@@ -235,10 +235,10 @@ perl -le '$a = $n = 20; $b = $m = 35; ($m,$n) = ($n,$m%$n) while $n; print $a*$b
 # 在 5-15 间生成 10 个随机数，不包含 15
 perl -le '$n=10; $min=5; $max=15; $, = " "; print map { int(rand($max-$min))+$min } 1..$n'
 
-# Find and print all permutations of a list
+# 找到并打印列表中所有的排列
 perl -MAlgorithm::Permute -le '$l = [1,2,3,4,5]; $p = Algorithm::Permute->new($l); print @r while @r = $p->next'
 
-# Generate the power set
+# 产生幂集
 perl -MList::PowerSet=powerset -le '@l = (1,2,3,4,5); for (@{powerset(@l)}) { print "@$_" }'
 
 # 将 IP 地址转换为无符号的数字
@@ -262,14 +262,14 @@ perl -le 'print ("a".."z")'
 perl -le '$, = ","; print ("a".."z")'
 perl -le 'print join ",", ("a".."z")'
 
-# 生成所有 "a" 到 "zz" 的字符，并打印它们
+# 生成并打印所有 "a" 到 "zz" 间的字符	
 perl -le 'print ("a".."zz")'
 perl -le 'print "aa".."zz"'
 
-# Create a hex lookup table
+# 创建一个十六进制的数组
 @hex = (0..9, "a".."f")
 
-# Convert a decimal number to hex using @hex lookup table
+# 使用十六进制数组,将一个十进制数转换为十六进制
 perl -le '$num = 255; @hex = (0..9, "a".."f"); while ($num) { $s = $hex[($num%16)&15].$s; $num = int $num/16 } print $s'
 perl -le '$hex = sprintf("%x", 255); print $hex'
 perl -le '$num = "ff"; print hex $num'
@@ -281,7 +281,7 @@ perl -le 'print map { ("a".."z", 0..9)[rand 36] } 1..8'
 # 生成定长的字符串
 perl -le 'print "a"x50'
 
-# Create a repeated list of elements
+# 创建一个重复的数组
 perl -le '@list = (1,2)x20; print "@list"'
 
 # 利用字符串生成数组
@@ -342,12 +342,12 @@ perl -MHTML::Entities -le 'print encode_entities($string)'
 # HTML 解码一个字符串
 perl -MHTML::Entities -le 'print decode_entities($string)'
 
-# 转换所有文本到大写格式
+# 将所有文本转换为大写格式
 perl -nle 'print uc'
 perl -ple '$_=uc'
 perl -nle 'print "\U$_"'
 
-# 转换所有文本到小写格式
+# 将所有文本转换为小写格式
 perl -nle 'print lc'
 perl -ple '$_=lc'
 perl -nle 'print "\L$_"'
@@ -391,7 +391,7 @@ perl -pe 's/foo/bar/g'
 # 当一行中出现 "baz" 时,使用 "foo" 替换(查找并替换)最开始的一个 "bar"
 perl -pe '/baz/ && s/foo/bar/'
 
-# Binary patch a file (find and replace a given array of bytes as hex numbers)
+# 使用二进制对文件打补丁(查找指定的数组,将其替换为十六进制的数)
 perl -pi -e 's/\x89\xD8\x48\x8B/\x90\x90\x48\x8B/g' file
 
 
@@ -428,7 +428,7 @@ perl -ne 'if ($p) { print; $p = 0 } $p++ if /regex/'
 # 打印同时包含 AAA 和 BBB 的行
 perl -ne '/AAA/ && /BBB/ && print'
 
-# 打印同时不包含 AAA 和 BBB 的行
+# 打印既不包含 AAA 也不包含 BBB 的行
 perl -ne '!/AAA/ && !/BBB/ && print'
 
 # 打印顺序包含 AAA, BBB, CCC 的行
@@ -443,7 +443,7 @@ perl -ne 'print if length < 80'
 # 只显示第 13 行
 perl -ne '$. == 13 && print && exit'
 
-# 除了第 27 行,其它行都打印
+# 打印除了第 27 行外的所有行
 perl -ne '$. != 27 && print'
 perl -ne 'print if $. != 27'
 
@@ -454,7 +454,7 @@ perl -ne 'print if int($.) ~~ (13, 19, 67)'
 # 打印匹配两个正则间的所有行(包括匹配行本身)
 perl -ne 'print if /regex1/../regex2/'
 
-# 显示第 17 到 30 行间的所有行
+# 打印第 17 到 30 行间的所有行
 perl -ne 'print if $. >= 17 && $. <= 30'
 perl -ne 'print if int($.) ~~ (17..30)'
 perl -ne 'print if grep { $_ == $. } 17..30'
@@ -471,7 +471,7 @@ perl -ne 'print if /\d/'
 # 查找只包含数字的行
 perl -ne 'print if /^\d+$/'
 
-# 显示只包含字母的行
+# 打印只包含字母的行
 perl -ne 'print if /^[[:alpha:]]+$/
 
 # 从文件首行开始,每两行打印一次
@@ -509,7 +509,7 @@ if ($ip =~ /^($ip_part\.){3}$ip_part$/) {
 # 检查一个字符串是否是电子邮箱地址
 /\S+@\S+\.\S+/
 
-# 检测一个字符串是否是数字
+# 检测一个字符串是否是十进制数
 /^\d+$/
 /^[+-]?\d+$/
 /^[+-]?\d+\.?\d*$/
@@ -566,9 +566,9 @@ PERL 单行解释电子书
 
 	http://www.catonmat.net/blog/perl-book/
 
-这本电子书以我写的 7 篇系列博客文章为基础.
-在这本书里,我 reviewed 所有的单行程序,添加了更多的解释,新增的单行代码
-同时也添加了两章 - 介绍 Perl 单行代码和总结了常用的特殊变量.
+这本电子书以我在博客中写的 7 篇系列文章为基础.
+在这本书里,我回顾了所有的单行程序,添加了更多的解释,新增了单行代码
+同时也添加了两章 - 介绍 Perl 单行程序和总结了常用的特殊变量.
 
 您可以在这里阅读原始的系列文章:
 
@@ -593,14 +593,17 @@ avar              https://github.com/avar
 rent0n
 
 
-发现了臭虫? 添加其它的单行?
+发现了臭虫? 添加其它的单行程序?
 ------------------------------------
 
 给我的电子邮箱(peter@catonmat.net)发送臭虫邮件或新的单行代码!
 
-玩得愉快
+祝你愉快
 --------
 
-我希望您觉得这些单行有用, 玩得愉快!
+我希望您觉得这些单行有用, 祝你愉快!
 
 #---完结---
+
+翻译: veinian@gmail.com
+感谢我的朋友 俊丽 帮忙校验
