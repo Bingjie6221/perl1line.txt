@@ -389,6 +389,10 @@ perl -pe 's/foo/bar/g'
 # Substitute (find and replace) "foo" with "bar" on lines that match "baz"
 perl -pe '/baz/ && s/foo/bar/'
 
+# Substitute (find and replace) "foo" with "bar" on lines that match "baz" in file
+perl -i.orig -lpe 'BEGIN {$findstr = shift @ARGV; $str = shift @ARGV; $rep = shift @ARGV}; /$findstr/ && s/$str/$rep/;' 'baz' 'foo' 'bar' file
+
+
 # Binary patch a file (find and replace a given array of bytes as hex numbers)
 perl -pi -e 's/\x89\xD8\x48\x8B/\x90\x90\x48\x8B/g' file
 
@@ -553,6 +557,7 @@ PERL TRICKS
 # Print the version of a Perl module
 perl -MModule -le 'print $Module::VERSION'
 perl -MLWP::UserAgent -le 'print $LWP::UserAgent::VERSION'
+
 
 
 PERL ONE-LINERS EXPLAINED E-BOOK

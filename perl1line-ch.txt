@@ -391,6 +391,9 @@ perl -pe 's/foo/bar/g'
 # 当一行中出现 "baz" 时,使用 "foo" 替换(查找并替换)最开始的一个 "bar"
 perl -pe '/baz/ && s/foo/bar/'
 
+# 修改文件中出现 "baz" 的行使用 "foo" 替换(查找并替换)最开始的一个 "bar"
+perl -i.orig -lpe 'BEGIN {$findstr = shift @ARGV; $str= shift @ARGV; $rep = shift @ARGV}; /$findstr/ && s/$str/$rep/;' 'baz' 'foo' 'bar' file
+
 # 使用二进制对文件打补丁(查找指定的数组,将其替换为十六进制的数)
 perl -pi -e 's/\x89\xD8\x48\x8B/\x90\x90\x48\x8B/g' file
 
